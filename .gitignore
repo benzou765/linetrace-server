@@ -2,3 +2,4 @@ src/logs
 checker
 data
 echo
+ml_mnist
