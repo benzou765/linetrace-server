@@ -10,6 +10,11 @@ import (
 	// echo
 	"github.com/labstack/echo"
 	"github.com/labstack/echo/middleware"
+
+	// neural network
+	"github.com/goml/gobrain"
+	"math/rand"
+
 	// local packages
 )
 
@@ -80,9 +85,28 @@ func octetFileHandler(c echo.Context) error {
 	return c.String(http.StatusOK, "128,128")
 }
 
+func neuralTestHandler(c echo.Context) error {
+	rand.Seed(0)
+
+	// create the XOR representation pattern to train the network
+	patterns := [][][]float64 {
+		{{0, 0}, {0}},
+		{{0, 1}, {1}},
+		{{1, 0}, {1}},
+		{{1, 1}, {0}},
+	}
+	// instantiate the Feed Forward
+	ff := &gobrain.FeedForward{}
+	// 2 input, 2 hidden nodes and 1 output.
+	ff.Init(2, 2, 1)
+	
+	return c.String(http.StatusOK, "ok")
+}
+
 // Main
 func main() {
 	var addr = ":8080"
+	var isLogOutput = false
 
 	e := echo.New()
 
@@ -95,9 +119,11 @@ func main() {
 	e.Use(middleware.Recover())
 
 	// Debug Log
-	//	debugLogFile, _ := os.Create("logs/debug.log")
-	//	defer debugLogFile.Close()
-	//	e.Logger.SetOutput(debugLogFile)
+	if isLogOutput {
+		debugLogFile, _ := os.Create("logs/debug.log")
+		defer debugLogFile.Close()
+		e.Logger.SetOutput(debugLogFile)
+	}
 	e.Debug = true
 
 	// Route
@@ -105,6 +131,7 @@ func main() {
 	e.GET("/wee9reiw9ieth3air2shahthuu0haibu", helloHandler)
 	e.POST("/no5eepeiyeil9eevaij4eed5ohghahva", uploadHandler)
 	e.POST("/id1aefup8oozahlo6etai4gei2aew5ee", octetFileHandler)
+	e.GET("sho9haiquee6aivei4uyoo3oof4rohtu", neuralTestHandler)
 
 	e.Logger.Fatal(e.Start(addr))
 }

@@ -18,10 +18,23 @@ Content-Type: image/jpeg
 （データ）
 ```
 
-## テストデータ
-0x41 0x41 0x41 (aaa)
+## 機械学習のライブラリ
+tensorflowを利用しようとしたが、
+* 多くのミドルウェアが必要なこと
+* ハードウェア構成を意識した設計が必要なこと
+* 環境構築するのに手間がかかること
+から断念。今回は機械学習のテストをするだけなので、gobrainを使用
+うまく行かない場合は、python＋scikit-learnで実装。
+
+## docker便利コマンド
 ```
-curl -v -X POST http://localhost:8080/id1aefup8oozahlo6etai4gei2aew5ee -H "Content-Type: application/octet-stream" -d test.bin
+docker run -it --rm (image) bash
+```
+上記コマンドで終了時にdockerイメージも一緒に削除してくれる。
+イメージ作成中は便利
+
+## テストデータ
+```
 curl -v http://localhost:8080/id1aefup8oozahlo6etai4gei2aew5ee -H "Content-Type: image/jpeg" --data-binary @test_image.jpg
 ```
 
@@ -106,5 +119,5 @@ Go でバイナリ処理：https://qiita.com/Jxck_/items/c64d9ae0e910762eab37
 image/jpegの扱い方：https://developer.mozilla.org/ja/docs/Web/HTTP/Basics_of_HTTP/MIME_types#JPEG
 Awesome Go : 素晴らしい Go のフレームワーク・ライブラリ・ソフトウェアの数々：https://qiita.com/hatai/items/f31914f37dc6c53b2bce
 Golangだけでやる機械学習と画像分析：https://mattn.kaoriya.net/software/lang/go/20181108123756.htm
-手書き数字判別テストライブラリMNIST：http://yann.lecun.com/exdb/mnist/
-tensorflow：https://www.tensorflow.org/
+THE MNIST DATABASE：http://yann.lecun.com/exdb/mnist/
+Alpine Linuxにnumpy, scipy, scikit-learn, pandasを入れた：https://qiita.com/ricesho/items/e56bf08f51ea406674eb
