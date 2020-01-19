@@ -1,4 +1,8 @@
-# 実装中のメモ
+# ライントレース、サーバ側コード
+Arduino、ESP8266、groveカメラモジュール、モータを使用して、ライントレースカーを作成。
+TODO: どこかのタイミングでコードを整理
+
+## 実装中のメモ
 カメラで取得したデータは、フォームデータに変換できる余裕があるかわからないので、
 バイナリで送信。使うヘッダーは下記
 ```
@@ -103,7 +107,18 @@ TEST SET IMAGE FILE (t10k-images-idx3-ubyte):
 xxxx     unsigned byte   ??               pixel
 Pixels are organized row-wise. Pixel values are 0 to 255. 0 means background (white), 255 means foreground (black).
 
-# 起動手順
+## MNISTを使用して実験する場合
+コピーをこのgitに保存するとファイルサイズが大きいので、gitignoreで除去
+実験する場合は、ml_mnist配下に下記ファイルを保存すること。
+公式サイトと圧縮形式が異なる場合は、再圧縮が必要
+THE MNIST DATABASE：http://yann.lecun.com/exdb/mnist/
+
+* t10k-images-idx3-ubyte.gz
+* t10k-labels-idx1-ubyte.gz
+* train-images-idx3-ubyte.gz
+* train-labels-idx1-ubyte.gz
+
+## 起動手順
 下記コマンドを実行
 ```
 $ docker-compose build
